@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UrlService {
-    private final ShorteningService shorteningService;
+public class UrlMappingService {
+    private final CodeGeneratorService codeGeneratorService;
     private final UrlRepository urlRepository;
 
     public UrlMapping getUrlByShortCode(String shortCode) {
@@ -21,7 +21,7 @@ public class UrlService {
     }
 
     public UrlMapping createUrlMapping(UrlRequest request) {
-        var shortCode = shorteningService.shortenUrl(request.url());
+        var shortCode = codeGeneratorService.shortenUrl(request.url());
 
         var urlMapping = UrlMapping.builder()
                 .url(request.url())
