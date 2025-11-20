@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: url-shortener
+  datasource:
+    username: bahaa
+    password: password
+    url: jdbc:mysql://localhost:3306/urlDB
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
