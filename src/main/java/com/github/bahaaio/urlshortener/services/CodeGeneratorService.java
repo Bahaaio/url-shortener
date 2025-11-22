@@ -2,6 +2,7 @@ package com.github.bahaaio.urlshortener.services;
 
 import com.github.bahaaio.urlshortener.repository.UrlRepository;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -11,9 +12,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CodeGeneratorService {
+    @Value("${shortener.code-length:6}")
+    private int CODE_LENGTH;
+
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int ALPHABET_LENGTH = ALPHABET.length();
-    private static final int CODE_LENGTH = 6;
+
     private static final int MAX_TRIES = 3;
     private final SecureRandom secureRandom = new SecureRandom();
 
