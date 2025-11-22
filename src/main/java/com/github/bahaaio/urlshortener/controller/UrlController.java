@@ -1,7 +1,8 @@
 package com.github.bahaaio.urlshortener.controller;
 
-import com.github.bahaaio.urlshortener.dtos.UrlRequest;
-import com.github.bahaaio.urlshortener.model.UrlMapping;
+import com.github.bahaaio.urlshortener.dtos.UrlMappingRequest;
+import com.github.bahaaio.urlshortener.dtos.UrlMappingResponse;
+import com.github.bahaaio.urlshortener.services.StatsService;
 import com.github.bahaaio.urlshortener.services.UrlMappingService;
 
 import org.springframework.http.ResponseEntity;
@@ -13,25 +14,28 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/shorten")
+@RequestMapping("/api/v1/urls")
 public class UrlController {
     private final UrlMappingService urlMappingService;
+    private final StatsService statsService;
 
     @GetMapping("/{shortCode}")
-    public ResponseEntity<UrlMapping> getByCode(@PathVariable String shortCode) {
+    public ResponseEntity<UrlMappingResponse> getByCode(@PathVariable String shortCode) {
+        statsService.IncrementAccessCount(shortCode);
         return ResponseEntity.ok(urlMappingService.getUrlByShortCode(shortCode));
     }
 
     @PostMapping
-    public ResponseEntity<UrlMapping> createUrl(@RequestBody UrlRequest request) {
+    public ResponseEntity<UrlMappingResponse> createUrl(@RequestBody UrlMappingRequest request) {
         var created = urlMappingService.createUrlMapping(request);
+        statsService.createStats(created.shortCode());
 
-        return ResponseEntity.created(URI.create("/shorten/" + created.getShortCode()))
+        return ResponseEntity.created(URI.create("/shorten/" + created.shortCode()))
                 .body(created);
     }
 
     @PutMapping("/{shortCode}")
-    public ResponseEntity<UrlMapping> updatedUrl(@PathVariable String shortCode, @RequestBody UrlRequest request) {
+    public ResponseEntity<UrlMappingResponse> updatedUrl(@PathVariable String shortCode, @RequestBody UrlMappingRequest request) {
         return ResponseEntity.ok(urlMappingService.updateUrl(shortCode, request));
     }
 

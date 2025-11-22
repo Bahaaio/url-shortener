@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -19,13 +18,9 @@ import lombok.*;
 @NoArgsConstructor
 public class UrlMapping {
     @Id
-    @GeneratedValue
-    private Long id;
-
-    private String url;
-
-    @Column(unique = true)
+    @Column(length = 6)
     private String shortCode;
+    private String url;
 
     @CreationTimestamp
     @Column(updatable = false)

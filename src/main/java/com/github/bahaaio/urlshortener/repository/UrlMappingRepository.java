@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UrlRepository extends JpaRepository<UrlMapping, Long> {
+public interface UrlMappingRepository extends JpaRepository<UrlMapping, Long> {
     void deleteByShortCode(String shortCode);
 
     boolean existsByShortCode(String shortCode);

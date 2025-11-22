@@ -1,9 +1,11 @@
 package com.github.bahaaio.urlshortener.services;
 
-import com.github.bahaaio.urlshortener.dtos.UrlRequest;
+import com.github.bahaaio.urlshortener.dtos.UrlMappingRequest;
+import com.github.bahaaio.urlshortener.dtos.UrlMappingResponse;
 import com.github.bahaaio.urlshortener.exception.UrlNotFoundException;
+import com.github.bahaaio.urlshortener.mapper.UrlMapper;
 import com.github.bahaaio.urlshortener.model.UrlMapping;
-import com.github.bahaaio.urlshortener.repository.UrlRepository;
+import com.github.bahaaio.urlshortener.repository.UrlMappingRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -13,14 +15,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UrlMappingService {
     private final CodeGeneratorService codeGeneratorService;
-    private final UrlRepository urlRepository;
+    private final UrlMappingRepository urlMappingRepository;
+    private final UrlMapper urlMapper;
 
-    public UrlMapping getUrlByShortCode(String shortCode) {
-        return urlRepository.getUrlMappingByShortCode(shortCode).
+    public UrlMappingResponse getUrlByShortCode(String shortCode) {
+        var urlMapping = urlMappingRepository.getUrlMappingByShortCode(shortCode).
                 orElseThrow(() -> new UrlNotFoundException(shortCode));
+
+        return urlMapper.toUrlMappingResponse(urlMapping);
     }
 
-    public UrlMapping createUrlMapping(UrlRequest request) {
+    public UrlMappingResponse createUrlMapping(UrlMappingRequest request) {
         var shortCode = codeGeneratorService.shortenUrl(request.url());
 
         var urlMapping = UrlMapping.builder()
@@ -28,22 +33,22 @@ public class UrlMappingService {
                 .shortCode(shortCode)
                 .build();
 
-        return urlRepository.save(urlMapping);
+        return urlMapper.toUrlMappingResponse(urlMappingRepository.save(urlMapping));
     }
 
-    public UrlMapping updateUrl(String shortCode, UrlRequest request) {
-        var urlMapping = urlRepository.getUrlMappingByShortCode(shortCode)
+    public UrlMappingResponse updateUrl(String shortCode, UrlMappingRequest request) {
+        var urlMapping = urlMappingRepository.getUrlMappingByShortCode(shortCode)
                 .orElseThrow(() -> new UrlNotFoundException(shortCode));
 
         urlMapping.setUrl(request.url());
-        return urlRepository.save(urlMapping);
+        return urlMapper.toUrlMappingResponse(urlMappingRepository.save(urlMapping));
     }
 
     public void deleteUrlByShortCode(String shortCode) {
-        if (!urlRepository.existsByShortCode(shortCode)) {
+        if (!urlMappingRepository.existsByShortCode(shortCode)) {
             throw new UrlNotFoundException(shortCode);
         }
 
-        urlRepository.deleteByShortCode(shortCode);
+        urlMappingRepository.deleteByShortCode(shortCode);
     }
 }
