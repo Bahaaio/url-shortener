@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,7 +22,7 @@ public class ShortenController {
     private final UrlShorteningService urlShorteningService;
 
     @PostMapping
-    public ResponseEntity<ShortenResponse> createUrl(@RequestBody ShortenRequest request) {
+    public ResponseEntity<ShortenResponse> createUrl(@Valid @RequestBody ShortenRequest request) {
         var response = urlShorteningService.shortenUrl(request);
 
         return ResponseEntity

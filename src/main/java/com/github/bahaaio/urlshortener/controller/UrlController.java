@@ -9,6 +9,7 @@ import com.github.bahaaio.urlshortener.services.UrlShorteningService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,7 +28,7 @@ public class UrlController {
     }
 
     @PatchMapping("/{code}")
-    public ResponseEntity<ShortenResponse> updatedUrl(@PathVariable String code, @RequestBody UpdateUrlRequest request) {
+    public ResponseEntity<ShortenResponse> updatedUrl(@PathVariable String code, @Valid @RequestBody UpdateUrlRequest request) {
         return ResponseEntity.ok(urlShorteningService.updateShortenedUrl(code, request));
     }
 
