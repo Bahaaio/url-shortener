@@ -3,13 +3,14 @@ package com.github.bahaaio.urlshortener.controller;
 import com.github.bahaaio.urlshortener.services.StatsService;
 import com.github.bahaaio.urlshortener.services.UrlShorteningService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -19,8 +20,14 @@ public class RedirectController {
     private final UrlShorteningService urlShorteningService;
 
     @GetMapping("/{code}")
-    public void getByCode(@PathVariable String code, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Void> getByCode(@PathVariable String code) throws IOException {
         statsService.IncrementAccessCount(code);
-        response.sendRedirect(urlShorteningService.getUrlByCode(code));
+
+        var url = urlShorteningService.getUrlByCode(code);
+
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .header("Location", url)
+                .build();
     }
 }
