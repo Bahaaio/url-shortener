@@ -26,11 +26,11 @@ public class UrlMappingService {
     }
 
     public UrlMappingResponse createUrlMapping(UrlMappingRequest request) {
-        var shortCode = codeGeneratorService.shortenUrl(request.url());
+        var shortCode = codeGeneratorService.generateShortCode();
 
         var urlMapping = UrlMapping.builder()
-                .url(request.url())
                 .shortCode(shortCode)
+                .originalUrl(request.url())
                 .build();
 
         return urlMapper.toUrlMappingResponse(urlMappingRepository.save(urlMapping));
@@ -40,7 +40,7 @@ public class UrlMappingService {
         var urlMapping = urlMappingRepository.getUrlMappingByShortCode(shortCode)
                 .orElseThrow(() -> new UrlNotFoundException(shortCode));
 
-        urlMapping.setUrl(request.url());
+        urlMapping.setOriginalUrl(request.url());
         return urlMapper.toUrlMappingResponse(urlMappingRepository.save(urlMapping));
     }
 

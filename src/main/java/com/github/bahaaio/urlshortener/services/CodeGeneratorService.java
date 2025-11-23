@@ -16,7 +16,7 @@ public class CodeGeneratorService {
     @Value("${shortener.code-length:6}")
     private int CODE_LENGTH;
 
-    public String shortenUrl(String url) {
+    public String generateShortCode() {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < CODE_LENGTH; i++) {

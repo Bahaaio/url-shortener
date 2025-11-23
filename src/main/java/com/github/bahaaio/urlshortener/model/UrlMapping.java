@@ -19,8 +19,11 @@ import lombok.*;
 public class UrlMapping {
     @Id
     @Column(length = 6)
+    private Long id;
+
+    @Column(unique = true)
     private String shortCode;
-    private String url;
+    private String originalUrl;
 
     @CreationTimestamp
     @Column(updatable = false)
