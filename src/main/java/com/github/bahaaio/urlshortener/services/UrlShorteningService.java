@@ -2,7 +2,6 @@ package com.github.bahaaio.urlshortener.services;
 
 import com.github.bahaaio.urlshortener.dtos.ShortenRequest;
 import com.github.bahaaio.urlshortener.dtos.ShortenResponse;
-import com.github.bahaaio.urlshortener.dtos.UpdateUrlRequest;
 import com.github.bahaaio.urlshortener.exception.UrlNotFoundException;
 import com.github.bahaaio.urlshortener.mapper.UrlMapper;
 import com.github.bahaaio.urlshortener.model.UrlMapping;
@@ -46,7 +45,7 @@ public class UrlShorteningService {
         return urlMapper.toShortenResponse(urlMappingRepository.save(urlMapping));
     }
 
-    public ShortenResponse updateShortenedUrl(String code, UpdateUrlRequest request) {
+    public ShortenResponse updateShortenedUrl(String code, ShortenRequest request) {
         var urlMapping = urlMappingRepository.findByCode(code)
                 .orElseThrow(UrlNotFoundException::new);
 

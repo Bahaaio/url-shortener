@@ -1,7 +1,7 @@
 package com.github.bahaaio.urlshortener.controller;
 
+import com.github.bahaaio.urlshortener.dtos.ShortenRequest;
 import com.github.bahaaio.urlshortener.dtos.ShortenResponse;
-import com.github.bahaaio.urlshortener.dtos.UpdateUrlRequest;
 import com.github.bahaaio.urlshortener.dtos.UrlResponse;
 import com.github.bahaaio.urlshortener.mapper.UrlMapper;
 import com.github.bahaaio.urlshortener.services.UrlShorteningService;
@@ -28,7 +28,7 @@ public class UrlController {
     }
 
     @PatchMapping("/{code}")
-    public ResponseEntity<ShortenResponse> updatedUrl(@PathVariable String code, @Valid @RequestBody UpdateUrlRequest request) {
+    public ResponseEntity<ShortenResponse> updatedUrl(@PathVariable String code, @Valid @RequestBody ShortenRequest request) {
         return ResponseEntity.ok(urlShorteningService.updateShortenedUrl(code, request));
     }
 
