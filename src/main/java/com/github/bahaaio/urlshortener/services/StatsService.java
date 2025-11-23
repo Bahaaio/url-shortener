@@ -7,6 +7,7 @@ import com.github.bahaaio.urlshortener.repository.UrlMappingRepository;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,6 +23,7 @@ public class StatsService {
         return urlStatsMapper.toUrlStatsResponse(urlStats);
     }
 
+    @Transactional
     public void incrementAccessCount(String code) {
         mappingRepository.incrementAccessCount(code);
     }

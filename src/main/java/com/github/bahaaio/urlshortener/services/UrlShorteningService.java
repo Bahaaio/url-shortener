@@ -10,6 +10,7 @@ import com.github.bahaaio.urlshortener.repository.UrlMappingRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -33,6 +34,7 @@ public class UrlShorteningService {
         return urlMapping.getOriginalUrl();
     }
 
+    @Transactional
     public ShortenResponse shortenUrl(ShortenRequest request) {
         var code = shortCodeGenerator.generateCode();
 
@@ -45,6 +47,7 @@ public class UrlShorteningService {
         return urlMapper.toShortenResponse(urlMappingRepository.save(urlMapping));
     }
 
+    @Transactional
     public ShortenResponse updateShortenedUrl(String code, ShortenRequest request) {
         var urlMapping = urlMappingRepository.findByCode(code)
                 .orElseThrow(UrlNotFoundException::new);
@@ -53,6 +56,7 @@ public class UrlShorteningService {
         return urlMapper.toShortenResponse(urlMappingRepository.save(urlMapping));
     }
 
+    @Transactional
     public void deleteUrlByCode(String code) {
         if (!urlMappingRepository.existsByCode(code)) {
             throw new UrlNotFoundException();
