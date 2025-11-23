@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,7 +18,7 @@ public class RedirectController {
     private final UrlShorteningService urlShorteningService;
 
     @GetMapping("/{code}")
-    public ResponseEntity<Void> getByCode(@PathVariable String code) throws IOException {
+    public ResponseEntity<Void> getByCode(@PathVariable String code) {
         statsService.IncrementAccessCount(code);
 
         var url = urlShorteningService.getUrlByCode(code);

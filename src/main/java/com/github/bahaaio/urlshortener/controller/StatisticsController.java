@@ -13,11 +13,11 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/stats")
+@RequestMapping("/api/v1/urls")
 public class StatisticsController {
     private final StatsService statsService;
 
-    @GetMapping("/{code}")
+    @GetMapping("/{code}/stats")
     public ResponseEntity<UrlStatsResponse> getStats(@PathVariable String code) {
         return ResponseEntity.ok(statsService.getStats(code));
     }

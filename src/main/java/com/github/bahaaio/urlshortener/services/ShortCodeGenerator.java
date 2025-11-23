@@ -16,7 +16,7 @@ public class ShortCodeGenerator {
     @Value("${shortener.code-length:6}")
     private int CODE_LENGTH;
 
-    public String generateShortCode() {
+    public String generateCode() {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < CODE_LENGTH; i++) {

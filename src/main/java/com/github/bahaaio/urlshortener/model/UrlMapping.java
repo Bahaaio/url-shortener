@@ -25,7 +25,11 @@ public class UrlMapping {
 
     @Column(unique = true)
     private String code;
+    private String shortUrl;
     private String originalUrl;
+
+    @Builder.Default
+    private Long accessCount = 0L;
 
     @CreationTimestamp
     @Column(updatable = false)
