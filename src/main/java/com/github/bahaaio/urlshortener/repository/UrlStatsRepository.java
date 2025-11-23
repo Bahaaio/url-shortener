@@ -14,8 +14,8 @@ import jakarta.transaction.Transactional;
 public interface UrlStatsRepository extends JpaRepository<UrlStats, Long> {
     @Transactional
     @Modifying
-    @Query("UPDATE UrlStats s SET s.accessCount = s.accessCount + 1 WHERE s.shortCode = :shortCode")
-    void incrementAccessCount(@Param("shortCode") String shortCode);
+    @Query("UPDATE UrlStats s SET s.accessCount = s.accessCount + 1 WHERE s.code = :code")
+    void incrementAccessCount(@Param("code") String code);
 
-    Optional<UrlStats> findByShortCode(String shortCode);
+    Optional<UrlStats> findByCode(String code);
 }

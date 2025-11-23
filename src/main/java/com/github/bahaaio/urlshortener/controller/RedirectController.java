@@ -18,9 +18,9 @@ public class RedirectController {
     private final StatsService statsService;
     private final UrlShorteningService urlShorteningService;
 
-    @GetMapping("/{shortCode}")
-    public void getByCode(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
-        statsService.IncrementAccessCount(shortCode);
-        response.sendRedirect(urlShorteningService.getUrlByShortCode(shortCode));
+    @GetMapping("/{code}")
+    public void getByCode(@PathVariable String code, HttpServletResponse response) throws IOException {
+        statsService.IncrementAccessCount(code);
+        response.sendRedirect(urlShorteningService.getUrlByCode(code));
     }
 }

@@ -16,23 +16,23 @@ public class StatsService {
     private final UrlStatsRepository statsRepository;
     private final UrlStatsMapper urlStatsMapper;
 
-    public void createStats(String shortCode) {
+    public void createStats(String code) {
         var stats = UrlStats.builder()
-                .shortCode(shortCode)
+                .code(code)
                 .accessCount(0L)
                 .build();
 
         statsRepository.save(stats);
     }
 
-    public UrlStatsResponse getStats(String shortCode) {
-        var urlStats = statsRepository.findByShortCode(shortCode)
-                .orElseThrow(() -> new UrlNotFoundException(shortCode));
+    public UrlStatsResponse getStats(String code) {
+        var urlStats = statsRepository.findByCode(code)
+                .orElseThrow(UrlNotFoundException::new);
 
         return urlStatsMapper.toUrlStatsResponse(urlStats);
     }
 
-    public void IncrementAccessCount(String shortCode) {
-        statsRepository.incrementAccessCount(shortCode);
+    public void IncrementAccessCount(String code) {
+        statsRepository.incrementAccessCount(code);
     }
 }

@@ -27,21 +27,21 @@ public class ShortenController {
     @PostMapping
     public ResponseEntity<ShortenResponse> createUrl(@RequestBody ShortenRequest request) {
         var created = urlShorteningService.shortenUrl(request);
-        statsService.createStats(created.shortCode());
+        statsService.createStats(created.code());
 
-        var uri = URI.create(URL_BASE + "/" + created.shortCode());
+        var uri = URI.create(URL_BASE + "/" + created.code());
 
         return ResponseEntity.created(uri).body(created);
     }
 
-    @PatchMapping("/{shortCode}")
-    public ResponseEntity<ShortenResponse> updatedUrl(@PathVariable String shortCode, @RequestBody UpdateUrlRequest request) {
-        return ResponseEntity.ok(urlShorteningService.updateShortenedUrl(shortCode, request));
+    @PatchMapping("/{code}")
+    public ResponseEntity<ShortenResponse> updatedUrl(@PathVariable String code, @RequestBody UpdateUrlRequest request) {
+        return ResponseEntity.ok(urlShorteningService.updateShortenedUrl(code, request));
     }
 
-    @DeleteMapping("/{shortCode}")
-    public ResponseEntity<Void> deleteUrl(@PathVariable String shortCode) {
-        urlShorteningService.deleteUrlByShortCode(shortCode);
+    @DeleteMapping("/{code}")
+    public ResponseEntity<Void> deleteUrl(@PathVariable String code) {
+        urlShorteningService.deleteUrlByCode(code);
         return ResponseEntity.noContent().build();
     }
 }

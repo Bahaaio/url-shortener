@@ -18,7 +18,7 @@ public class UrlStats {
     private Long id;
 
     @Column(unique = true)
-    String shortCode;
+    String code;
 
     private Long accessCount;
 }

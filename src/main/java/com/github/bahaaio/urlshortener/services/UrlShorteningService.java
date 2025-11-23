@@ -19,37 +19,37 @@ public class UrlShorteningService {
     private final UrlMappingRepository urlMappingRepository;
     private final UrlMapper urlMapper;
 
-    public String getUrlByShortCode(String shortCode) {
-        var urlMapping = urlMappingRepository.getUrlMappingByShortCode(shortCode)
-                .orElseThrow(() -> new UrlNotFoundException(shortCode));
+    public String getUrlByCode(String code) {
+        var urlMapping = urlMappingRepository.getUrlMappingByCode(code)
+                .orElseThrow(UrlNotFoundException::new);
 
         return urlMapping.getOriginalUrl();
     }
 
     public ShortenResponse shortenUrl(ShortenRequest request) {
-        var shortCode = shortCodeGenerator.generateShortCode();
+        var code = shortCodeGenerator.generateShortCode();
 
         var urlMapping = UrlMapping.builder()
-                .shortCode(shortCode)
+                .code(code)
                 .originalUrl(request.url())
                 .build();
 
         return urlMapper.toUrlMappingResponse(urlMappingRepository.save(urlMapping));
     }
 
-    public ShortenResponse updateShortenedUrl(String shortCode, UpdateUrlRequest request) {
-        var urlMapping = urlMappingRepository.getUrlMappingByShortCode(shortCode)
-                .orElseThrow(() -> new UrlNotFoundException(shortCode));
+    public ShortenResponse updateShortenedUrl(String code, UpdateUrlRequest request) {
+        var urlMapping = urlMappingRepository.getUrlMappingByCode(code)
+                .orElseThrow(UrlNotFoundException::new);
 
         urlMapping.setOriginalUrl(request.url());
         return urlMapper.toUrlMappingResponse(urlMappingRepository.save(urlMapping));
     }
 
-    public void deleteUrlByShortCode(String shortCode) {
-        if (!urlMappingRepository.existsByShortCode(shortCode)) {
-            throw new UrlNotFoundException(shortCode);
+    public void deleteUrlByCode(String code) {
+        if (!urlMappingRepository.existsByCode(code)) {
+            throw new UrlNotFoundException();
         }
 
-        urlMappingRepository.deleteByShortCode(shortCode);
+        urlMappingRepository.deleteByCode(code);
     }
 }

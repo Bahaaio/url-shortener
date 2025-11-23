@@ -24,7 +24,7 @@ public class UrlMapping {
     private Long id;
 
     @Column(unique = true)
-    private String shortCode;
+    private String code;
     private String originalUrl;
 
     @CreationTimestamp

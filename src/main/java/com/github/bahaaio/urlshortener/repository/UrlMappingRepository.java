@@ -12,9 +12,9 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface UrlMappingRepository extends JpaRepository<UrlMapping, Long> {
     @Transactional
-    void deleteByShortCode(String shortCode);
+    void deleteByCode(String code);
 
-    boolean existsByShortCode(String shortCode);
+    boolean existsByCode(String code);
 
-    Optional<UrlMapping> getUrlMappingByShortCode(String shortCode);
+    Optional<UrlMapping> getUrlMappingByCode(String code);
 }

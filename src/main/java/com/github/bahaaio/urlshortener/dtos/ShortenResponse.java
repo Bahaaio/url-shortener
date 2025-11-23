@@ -1,7 +1,7 @@
 package com.github.bahaaio.urlshortener.dtos;
 
 public record ShortenResponse(
-        String shortCode
+        String code
         // TODO: add short url
 ) {
 }

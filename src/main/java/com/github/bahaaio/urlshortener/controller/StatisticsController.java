@@ -17,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class StatisticsController {
     private final StatsService statsService;
 
-    @GetMapping("/{shortCode}")
-    public ResponseEntity<UrlStatsResponse> getStats(@PathVariable String shortCode) {
-        return ResponseEntity.ok(statsService.getStats(shortCode));
+    @GetMapping("/{code}")
+    public ResponseEntity<UrlStatsResponse> getStats(@PathVariable String code) {
+        return ResponseEntity.ok(statsService.getStats(code));
     }
 }
