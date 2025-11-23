@@ -20,5 +20,5 @@ public class UrlStats {
     @Column(unique = true)
     String shortCode;
 
-    private long accessCount;
+    private Long accessCount;
 }

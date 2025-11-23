@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -18,6 +19,7 @@ import lombok.*;
 @NoArgsConstructor
 public class UrlMapping {
     @Id
+    @GeneratedValue
     @Column(length = 6)
     private Long id;
 

@@ -16,13 +16,13 @@ public class StatsService {
     private final UrlStatsRepository statsRepository;
     private final UrlStatsMapper urlStatsMapper;
 
-    public UrlStats createStats(String shortCode) {
+    public void createStats(String shortCode) {
         var stats = UrlStats.builder()
                 .shortCode(shortCode)
-                .accessCount(0)
+                .accessCount(0L)
                 .build();
 
-        return statsRepository.save(stats);
+        statsRepository.save(stats);
     }
 
     public UrlStatsResponse getStats(String shortCode) {

@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import jakarta.transaction.Transactional;
+
 @Repository
 public interface UrlMappingRepository extends JpaRepository<UrlMapping, Long> {
+    @Transactional
     void deleteByShortCode(String shortCode);
 
     boolean existsByShortCode(String shortCode);
