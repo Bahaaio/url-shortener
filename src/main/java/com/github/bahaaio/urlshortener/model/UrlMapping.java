@@ -20,10 +20,9 @@ import lombok.*;
 public class UrlMapping {
     @Id
     @GeneratedValue
-    @Column(length = 6)
     private Long id;
 
-    @Column(unique = true)
+    @Column(length = 20, unique = true)
     private String code;
     private String shortUrl;
     private String originalUrl;
