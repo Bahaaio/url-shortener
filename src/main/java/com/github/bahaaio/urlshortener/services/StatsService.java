@@ -22,7 +22,7 @@ public class StatsService {
         return urlStatsMapper.toUrlStatsResponse(urlStats);
     }
 
-    public void IncrementAccessCount(String code) {
+    public void incrementAccessCount(String code) {
         mappingRepository.incrementAccessCount(code);
     }
 }

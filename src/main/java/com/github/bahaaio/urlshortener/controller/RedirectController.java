@@ -19,7 +19,7 @@ public class RedirectController {
 
     @GetMapping("/{code}")
     public ResponseEntity<Void> getByCode(@PathVariable String code) {
-        statsService.IncrementAccessCount(code);
+        statsService.incrementAccessCount(code);
 
         var url = urlShorteningService.getUrlByCode(code);
 
