@@ -36,7 +36,7 @@ public class UrlShorteningService {
 
     @Transactional
     public ShortenResponse shortenUrl(ShortenRequest request) {
-        var code = shortCodeGenerator.generateCode();
+        var code = shortCodeGenerator.generateUniqueCode();
 
         var urlMapping = UrlMapping.builder()
                 .code(code)

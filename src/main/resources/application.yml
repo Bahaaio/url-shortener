@@ -15,4 +15,5 @@ spring:
 
 shortener:
   code-length: 6
+  max-tries: 10
   base-url: "http://localhost:8080"
